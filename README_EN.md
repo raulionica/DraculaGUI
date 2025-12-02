@@ -126,10 +126,6 @@ Once the extension is loaded:
 - Automatic rotating target system  
 - Saves state between refreshes  
 
-### 🧍 Players  
-- Simple attack mode  
-- Adjustable counts  
-
 All settings persist using `localStorage`.
 
 ---
