@@ -143,6 +143,9 @@ dist/
 
 ---
 
+# Demo:
+![alt text](image.png)
+
 # 🤝 Contributing
 
 Pull requests and improvements are welcome!  
