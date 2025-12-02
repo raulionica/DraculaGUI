@@ -150,6 +150,9 @@ dist/
 
 ---
 
+# Demo:
+![alt text](image.png)
+
 # 🤝 Contributing
 
 All contributions are welcome.  
