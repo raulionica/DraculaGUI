@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "DraculaGUI",
+  "version": "1.0",
+  "description": "DraculaGUI – vertical HUD pentru toate subdomeniile *.aidraci.ro",
+  "permissions": ["scripting", "activeTab"],
+  "content_scripts": [
+    {
+      "matches": ["*://*.aidraci.ro/*"],
+      "js": ["draculaGUI.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["dracula_app/*"],
+      "matches": ["*://*.aidraci.ro/*"]
+    }
+  ]
+}

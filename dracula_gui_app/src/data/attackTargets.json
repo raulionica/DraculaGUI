@@ -1,0 +1,713 @@
+{
+    "gotgremlins.com": {
+        "parlament": {
+            "id": 30,
+            "url": "jucator.php?i=30",
+            "name": "Congress (Parliament)"
+        },
+        "guvern": {
+            "id": 3001,
+            "url": "jucator.php?i=3001",
+            "name": "Government"
+        },
+        "primarii": [
+            {
+                "id": 50,
+                "url": "jucator.php?i=50",
+                "name": "City Hall 1"
+            },
+            {
+                "id": 51,
+                "url": "jucator.php?i=51",
+                "name": "City Hall 2"
+            },
+            {
+                "id": 52,
+                "url": "jucator.php?i=52",
+                "name": "City Hall 3"
+            },
+            {
+                "id": 53,
+                "url": "jucator.php?i=53",
+                "name": "City Hall 4"
+            },
+            {
+                "id": 54,
+                "url": "jucator.php?i=54",
+                "name": "City Hall 5"
+            },
+            {
+                "id": 55,
+                "url": "jucator.php?i=55",
+                "name": "City Hall 6"
+            },
+            {
+                "id": 56,
+                "url": "jucator.php?i=56",
+                "name": "City Hall 7"
+            },
+            {
+                "id": 57,
+                "url": "jucator.php?i=57",
+                "name": "City Hall 8"
+            },
+            {
+                "id": 58,
+                "url": "jucator.php?i=58",
+                "name": "City Hall 9"
+            },
+            {
+                "id": 59,
+                "url": "jucator.php?i=59",
+                "name": "City Hall 10"
+            },
+            {
+                "id": 60,
+                "url": "jucator.php?i=60",
+                "name": "City Hall 11"
+            },
+            {
+                "id": 61,
+                "url": "jucator.php?i=61",
+                "name": "City Hall 12"
+            },
+            {
+                "id": 62,
+                "url": "jucator.php?i=62",
+                "name": "City Hall 13"
+            },
+            {
+                "id": 63,
+                "url": "jucator.php?i=63",
+                "name": "City Hall 14"
+            },
+            {
+                "id": 64,
+                "url": "jucator.php?i=64",
+                "name": "City Hall 15"
+            },
+            {
+                "id": 65,
+                "url": "jucator.php?i=65",
+                "name": "City Hall 16"
+            },
+            {
+                "id": 66,
+                "url": "jucator.php?i=66",
+                "name": "City Hall 17"
+            },
+            {
+                "id": 67,
+                "url": "jucator.php?i=67",
+                "name": "City Hall 18"
+            },
+            {
+                "id": 68,
+                "url": "jucator.php?i=68",
+                "name": "Court House 1"
+            },
+            {
+                "id": 69,
+                "url": "jucator.php?i=69",
+                "name": "Court House 2"
+            },
+            {
+                "id": 70,
+                "url": "jucator.php?i=70",
+                "name": "Court House 3"
+            },
+            {
+                "id": 71,
+                "url": "jucator.php?i=71",
+                "name": "City Hall 19"
+            },
+            {
+                "id": 72,
+                "url": "jucator.php?i=72",
+                "name": "City Hall 20"
+            },
+            {
+                "id": 73,
+                "url": "jucator.php?i=73",
+                "name": "Court House 4"
+            },
+            {
+                "id": 74,
+                "url": "jucator.php?i=74",
+                "name": "Court House 5"
+            },
+            {
+                "id": 75,
+                "url": "jucator.php?i=75",
+                "name": "Court House 6"
+            },
+            {
+                "id": 76,
+                "url": "jucator.php?i=76",
+                "name": "Court House 7"
+            }
+        ]
+    },
+    "aidraci.ro": {
+        "parlament": {
+            "id": 30,
+            "url": "jucator.php?i=30",
+            "name": "Parlament"
+        },
+        "guvern": {
+            "id": 3001,
+            "url": "jucator.php?i=3001",
+            "name": "Guvernul"
+        },
+        "primarii": [
+            {
+                "id": 50,
+                "url": "jucator.php?i=50",
+                "name": "Primarie 1"
+            },
+            {
+                "id": 51,
+                "url": "jucator.php?i=51",
+                "name": "Primarie 2"
+            },
+            {
+                "id": 52,
+                "url": "jucator.php?i=52",
+                "name": "Primarie 3"
+            },
+            {
+                "id": 53,
+                "url": "jucator.php?i=53",
+                "name": "Primarie 4"
+            },
+            {
+                "id": 54,
+                "url": "jucator.php?i=54",
+                "name": "Primarie 5"
+            },
+            {
+                "id": 55,
+                "url": "jucator.php?i=55",
+                "name": "Primarie 6"
+            },
+            {
+                "id": 56,
+                "url": "jucator.php?i=56",
+                "name": "Primarie 7"
+            },
+            {
+                "id": 57,
+                "url": "jucator.php?i=57",
+                "name": "Primarie 8"
+            },
+            {
+                "id": 58,
+                "url": "jucator.php?i=58",
+                "name": "Primarie 9"
+            },
+            {
+                "id": 59,
+                "url": "jucator.php?i=59",
+                "name": "Primarie 10"
+            },
+            {
+                "id": 60,
+                "url": "jucator.php?i=60",
+                "name": "Primarie 11"
+            },
+            {
+                "id": 61,
+                "url": "jucator.php?i=61",
+                "name": "Primarie 12"
+            },
+            {
+                "id": 62,
+                "url": "jucator.php?i=62",
+                "name": "Primarie 13"
+            },
+            {
+                "id": 63,
+                "url": "jucator.php?i=63",
+                "name": "Primarie 14"
+            },
+            {
+                "id": 64,
+                "url": "jucator.php?i=64",
+                "name": "Primarie 15"
+            },
+            {
+                "id": 65,
+                "url": "jucator.php?i=65",
+                "name": "Primarie 16"
+            },
+            {
+                "id": 66,
+                "url": "jucator.php?i=66",
+                "name": "Primarie 17"
+            },
+            {
+                "id": 67,
+                "url": "jucator.php?i=67",
+                "name": "Primarie 18"
+            },
+            {
+                "id": 68,
+                "url": "jucator.php?i=68",
+                "name": "Tribunal 1"
+            },
+            {
+                "id": 69,
+                "url": "jucator.php?i=69",
+                "name": "Tribunal 2"
+            },
+            {
+                "id": 70,
+                "url": "jucator.php?i=70",
+                "name": "Tribunal 3"
+            },
+            {
+                "id": 71,
+                "url": "jucator.php?i=71",
+                "name": "Primarie 19"
+            },
+            {
+                "id": 72,
+                "url": "jucator.php?i=72",
+                "name": "Primarie 20"
+            },
+            {
+                "id": 73,
+                "url": "jucator.php?i=73",
+                "name": "Tribunal 4"
+            },
+            {
+                "id": 74,
+                "url": "jucator.php?i=74",
+                "name": "Tribunal 5"
+            },
+            {
+                "id": 75,
+                "url": "jucator.php?i=75",
+                "name": "Tribunal 6"
+            },
+            {
+                "id": 76,
+                "url": "jucator.php?i=76",
+                "name": "Tribunal 7"
+            }
+        ]
+    },
+    "s2.aidraci.ro": {
+        "parlament": {
+            "id": 30,
+            "url": "jucator.php?i=30",
+            "name": "Parlament"
+        },
+        "guvern": {
+            "id": 3001,
+            "url": "jucator.php?i=3001",
+            "name": "Guvernul"
+        },
+        "primarii": [
+            {
+                "id": 50,
+                "url": "jucator.php?i=50",
+                "name": "Primarie 1"
+            },
+            {
+                "id": 51,
+                "url": "jucator.php?i=51",
+                "name": "Primarie 2"
+            },
+            {
+                "id": 52,
+                "url": "jucator.php?i=52",
+                "name": "Primarie 3"
+            },
+            {
+                "id": 53,
+                "url": "jucator.php?i=53",
+                "name": "Primarie 4"
+            },
+            {
+                "id": 54,
+                "url": "jucator.php?i=54",
+                "name": "Primarie 5"
+            },
+            {
+                "id": 55,
+                "url": "jucator.php?i=55",
+                "name": "Primarie 6"
+            },
+            {
+                "id": 56,
+                "url": "jucator.php?i=56",
+                "name": "Primarie 7"
+            },
+            {
+                "id": 57,
+                "url": "jucator.php?i=57",
+                "name": "Primarie 8"
+            },
+            {
+                "id": 58,
+                "url": "jucator.php?i=58",
+                "name": "Primarie 9"
+            },
+            {
+                "id": 59,
+                "url": "jucator.php?i=59",
+                "name": "Primarie 10"
+            },
+            {
+                "id": 60,
+                "url": "jucator.php?i=60",
+                "name": "Primarie 11"
+            },
+            {
+                "id": 61,
+                "url": "jucator.php?i=61",
+                "name": "Primarie 12"
+            },
+            {
+                "id": 62,
+                "url": "jucator.php?i=62",
+                "name": "Primarie 13"
+            },
+            {
+                "id": 63,
+                "url": "jucator.php?i=63",
+                "name": "Primarie 14"
+            },
+            {
+                "id": 64,
+                "url": "jucator.php?i=64",
+                "name": "Primarie 15"
+            },
+            {
+                "id": 65,
+                "url": "jucator.php?i=65",
+                "name": "Primarie 16"
+            },
+            {
+                "id": 66,
+                "url": "jucator.php?i=66",
+                "name": "Primarie 17"
+            },
+            {
+                "id": 67,
+                "url": "jucator.php?i=67",
+                "name": "Primarie 18"
+            },
+            {
+                "id": 68,
+                "url": "jucator.php?i=68",
+                "name": "Tribunal 1"
+            },
+            {
+                "id": 69,
+                "url": "jucator.php?i=69",
+                "name": "Tribunal 2"
+            },
+            {
+                "id": 70,
+                "url": "jucator.php?i=70",
+                "name": "Tribunal 3"
+            }
+        ]
+    },
+    "s3.aidraci.ro": {
+        "parlament": {
+            "id": 30,
+            "url": "jucator.php?i=30",
+            "name": "Parlament"
+        },
+        "guvern": {
+            "id": 3001,
+            "url": "jucator.php?i=3001",
+            "name": "Guvernul"
+        },
+        "primarii": [
+            {
+                "id": 50,
+                "url": "jucator.php?i=50",
+                "name": "Primarie 1"
+            },
+            {
+                "id": 51,
+                "url": "jucator.php?i=51",
+                "name": "Primarie 2"
+            },
+            {
+                "id": 52,
+                "url": "jucator.php?i=52",
+                "name": "Primarie 3"
+            },
+            {
+                "id": 53,
+                "url": "jucator.php?i=53",
+                "name": "Primarie 4"
+            },
+            {
+                "id": 54,
+                "url": "jucator.php?i=54",
+                "name": "Primarie 5"
+            },
+            {
+                "id": 55,
+                "url": "jucator.php?i=55",
+                "name": "Primarie 6"
+            },
+            {
+                "id": 56,
+                "url": "jucator.php?i=56",
+                "name": "Primarie 7"
+            },
+            {
+                "id": 57,
+                "url": "jucator.php?i=57",
+                "name": "Primarie 8"
+            },
+            {
+                "id": 58,
+                "url": "jucator.php?i=58",
+                "name": "Primarie 9"
+            },
+            {
+                "id": 59,
+                "url": "jucator.php?i=59",
+                "name": "Primarie 10"
+            },
+            {
+                "id": 60,
+                "url": "jucator.php?i=60",
+                "name": "Primarie 11"
+            },
+            {
+                "id": 61,
+                "url": "jucator.php?i=61",
+                "name": "Primarie 12"
+            },
+            {
+                "id": 62,
+                "url": "jucator.php?i=62",
+                "name": "Primarie 13"
+            },
+            {
+                "id": 63,
+                "url": "jucator.php?i=63",
+                "name": "Primarie 14"
+            },
+            {
+                "id": 64,
+                "url": "jucator.php?i=64",
+                "name": "Primarie 15"
+            },
+            {
+                "id": 65,
+                "url": "jucator.php?i=65",
+                "name": "Primarie 16"
+            },
+            {
+                "id": 66,
+                "url": "jucator.php?i=66",
+                "name": "Primarie 17"
+            },
+            {
+                "id": 67,
+                "url": "jucator.php?i=67",
+                "name": "Primarie 18"
+            },
+            {
+                "id": 71,
+                "url": "jucator.php?i=71",
+                "name": "Primarie 19"
+            },
+            {
+                "id": 72,
+                "url": "jucator.php?i=72",
+                "name": "Primarie 20"
+            },
+            {
+                "id": 68,
+                "url": "jucator.php?i=68",
+                "name": "Tribunal 1"
+            },
+            {
+                "id": 69,
+                "url": "jucator.php?i=69",
+                "name": "Tribunal 2"
+            },
+            {
+                "id": 70,
+                "url": "jucator.php?i=70",
+                "name": "Tribunal 3"
+            },
+            {
+                "id": 73,
+                "url": "jucator.php?i=73",
+                "name": "Tribunal 4"
+            },
+            {
+                "id": 74,
+                "url": "jucator.php?i=74",
+                "name": "Tribunal 5"
+            },
+            {
+                "id": 75,
+                "url": "jucator.php?i=75",
+                "name": "Tribunal 6"
+            },
+            {
+                "id": 76,
+                "url": "jucator.php?i=76",
+                "name": "Tribunal 7"
+            }
+        ]
+    },
+    "campionat.aidraci.ro": {
+        "parlament": {
+            "id": 30,
+            "url": "jucator.php?i=30",
+            "name": "Parlament"
+        },
+        "guvern": null,
+        "primarii": [
+            {
+                "id": 50,
+                "url": "jucator.php?i=50",
+                "name": "Primarie 1"
+            },
+            {
+                "id": 51,
+                "url": "jucator.php?i=51",
+                "name": "Primarie 2"
+            },
+            {
+                "id": 52,
+                "url": "jucator.php?i=52",
+                "name": "Tribunal 3"
+            },
+            {
+                "id": 53,
+                "url": "jucator.php?i=53",
+                "name": "Primarie 4"
+            },
+            {
+                "id": 54,
+                "url": "jucator.php?i=54",
+                "name": "Primarie 5"
+            },
+            {
+                "id": 55,
+                "url": "jucator.php?i=55",
+                "name": "Primarie 6"
+            },
+            {
+                "id": 56,
+                "url": "jucator.php?i=56",
+                "name": "Primarie 7"
+            },
+            {
+                "id": 57,
+                "url": "jucator.php?i=57",
+                "name": "Primarie 8"
+            },
+            {
+                "id": 58,
+                "url": "jucator.php?i=58",
+                "name": "Primarie 9"
+            },
+            {
+                "id": 59,
+                "url": "jucator.php?i=59",
+                "name": "Primarie 10"
+            },
+            {
+                "id": 60,
+                "url": "jucator.php?i=60",
+                "name": "Primarie 11"
+            },
+            {
+                "id": 61,
+                "url": "jucator.php?i=61",
+                "name": "Primarie 12"
+            },
+            {
+                "id": 62,
+                "url": "jucator.php?i=62",
+                "name": "Primarie 13"
+            },
+            {
+                "id": 63,
+                "url": "jucator.php?i=63",
+                "name": "Primarie 14"
+            },
+            {
+                "id": 64,
+                "url": "jucator.php?i=64",
+                "name": "Primarie 15"
+            },
+            {
+                "id": 65,
+                "url": "jucator.php?i=65",
+                "name": "Primarie 16"
+            },
+            {
+                "id": 66,
+                "url": "jucator.php?i=66",
+                "name": "Primarie 17"
+            },
+            {
+                "id": 67,
+                "url": "jucator.php?i=67",
+                "name": "Primarie 18"
+            },
+            {
+                "id": 68,
+                "url": "jucator.php?i=68",
+                "name": "Tribunal 1"
+            },
+            {
+                "id": 69,
+                "url": "jucator.php?i=69",
+                "name": "Tribunal 2"
+            },
+            {
+                "id": 70,
+                "url": "jucator.php?i=70",
+                "name": "Primarie 14"
+            },
+            {
+                "id": 71,
+                "url": "jucator.php?i=71",
+                "name": "Primarie 19"
+            },
+            {
+                "id": 72,
+                "url": "jucator.php?i=72",
+                "name": "Primarie 20"
+            },
+            {
+                "id": 73,
+                "url": "jucator.php?i=73",
+                "name": "Tribunal 4"
+            },
+            {
+                "id": 74,
+                "url": "jucator.php?i=74",
+                "name": "Tribunal 5"
+            },
+            {
+                "id": 75,
+                "url": "jucator.php?i=75",
+                "name": "Primarie 8"
+            },
+            {
+                "id": 76,
+                "url": "jucator.php?i=76",
+                "name": "Tribunal 7"
+            }
+        ]
+    }
+}
