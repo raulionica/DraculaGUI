@@ -6,14 +6,22 @@
   "permissions": ["scripting", "activeTab"],
   "content_scripts": [
     {
-      "matches": ["*://*.aidraci.ro/*"],
+      "matches": [
+        "*://*.aidraci.ro/*",
+        "*://www.gotgremlins.com/*",
+        "*://gotgremlins.com/*"
+      ],
       "js": ["draculaGUI.js"]
     }
   ],
   "web_accessible_resources": [
     {
       "resources": ["dracula_app/*"],
-      "matches": ["*://*.aidraci.ro/*"]
+      "matches": [
+        "*://*.aidraci.ro/*",
+        "*://www.gotgremlins.com/*",
+        "*://gotgremlins.com/*"
+      ]
     }
   ]
 }
