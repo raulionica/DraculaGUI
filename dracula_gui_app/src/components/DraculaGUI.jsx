@@ -85,9 +85,12 @@ export default function DraculaGUI() {
         // --------- FIX: TARGET ID is locked per attack step ---------
         let TARGET;
 
-        if (saved.lastTargetId) {
-            TARGET = saved.lastTargetId; // Same as last time (refresh-safe)
+        if (p.category === "government" || p.category === "parliament") {
+            // GUVERN / PARLAMENT -> REUSE SAME TARGET AFTER REFRESH
+            if (saved.lastTargetId) TARGET = saved.lastTargetId;
+            else TARGET = resolveTargetId(p);
         } else {
+            // PRIMARII & PLAYERS -> ALWAYS ROTATE / ALWAYS NEW
             TARGET = resolveTargetId(p);
         }
 
