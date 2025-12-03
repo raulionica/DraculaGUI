@@ -1,9 +1,9 @@
-import { toNumber } from "../../utils/formatted/numberFormat";
+import { toNumber } from "@/utils/formatted/numberFormat";
 import {
   DRACI_LOSS_ENUM,
   DRACI_WIN_ENUM,
   PREOTI_ENUM,
-} from "./AttackEnums";
+} from "@/components/attacks/AttackEnums";
 
 const attackFields = {
   /* ----------------------

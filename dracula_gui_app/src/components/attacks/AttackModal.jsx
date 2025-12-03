@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Modal,
@@ -12,7 +12,7 @@ import {
 import AttackActionCard from "./AttackActionCard";
 import AttackSelectInput from "./AttackSelectInput";
 import attackFields from "./attackFields";
-import IconThoe2 from "../custom-icons";
+import IconThoe2 from "@/components/custom-icons";
 import CloseButton from "../styled-components/button/CloseButton";
 
 export default function AttackModal({ type, open, onClose, onSubmit }) {

@@ -4,6 +4,11 @@ import { resolve } from "path";
 
 export default defineConfig({
   plugins: [react()],
+  resolve: {
+    alias: {
+      "@": resolve(__dirname, "src"),
+    },
+  },
   build: {
     // build-ul iese direct în extensie
     outDir: "../dracula_extension/dracula_app",

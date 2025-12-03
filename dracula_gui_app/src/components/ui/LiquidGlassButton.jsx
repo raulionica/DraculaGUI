@@ -1,7 +1,6 @@
-import React from "react";
 import { Box } from "@mui/material";
-import IconThoe2 from "../custom-icons";
-import { TextTooltip } from "../styled-components/tooltip/TextTooltip";
+import IconThoe2 from "@/components/custom-icons";
+import { TextTooltip } from "@/components/styled-components/tooltip/TextTooltip";
 
 export default function LiquidGlassButton({
     attackActionCard = null,
@@ -26,7 +25,7 @@ export default function LiquidGlassButton({
                         height: size,
                         borderRadius: "22px",
                         background: "rgba(255,255,255,0.04)",
-                        backdropFilter: "blur(15px)",
+                        backdropFilter: "blur(5px)",
                         border: "1px solid rgba(255,255,255,0.12)",
                         boxShadow:
                             "0 8px 25px rgba(0,0,0,0.45), inset 0 0 18px rgba(255,255,255,0.10)",

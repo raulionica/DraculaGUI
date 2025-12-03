@@ -1,146 +1,140 @@
-import React from "react";
-import { Box, Typography, LinearProgress, Avatar } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Box, Typography, Avatar, LinearProgress } from "@mui/material";
 import IconThoe2 from "@/components/custom-icons";
-import { formatNumber } from "./utils/formatted/numberFormat";
+import CloseButton from "@/components/styled-components/button/CloseButton";
+import { ATTACK_CARDS, STORAGE_KEY } from "@/constants/attacks";
+import { formatNumber } from "@/utils/formatted/numberFormat";
 
-export default function AttackProgressCard({ runningData, cardConfig }) {
+export default function AttackProgressCard() {
+    const [state, setState] = useState(null);
 
-    if (!runningData) return null;
+    useEffect(() => {
+        const interval = setInterval(() => {
+            const s = JSON.parse(localStorage.getItem(STORAGE_KEY));
+            setState(s || null);
+        }, 150);
 
-    const icon = cardConfig?.icon || "ui:characters";
-    const color = cardConfig?.color || "#00eaff";
+        return () => clearInterval(interval);
+    }, []);
+
+    if (!state) return null;
+
+    // Basic numbers
+    const progressIndex = state.index - 1;
+    const percent = Math.round((progressIndex / state.total) * 100);
+    const isLoss = state.index % 2 === 1;
+    const color = isLoss ? "#ff5959" : "#3bd7ff";
+    const card = ATTACK_CARDS.find(c => c.key === state?.config?.category);
+    const icon = card?.icon || "ui:characters";
+
+    // Target name
+    const targetName = state.currentTargetName || "Unknown";
+
+    // Attack values (standardized)
+    const draci = state?.config?.draci || state?.config?.draci_loss || 0;
+    const preoti = state?.config?.preoti || state?.config?.preoti_loss || 0;
+
+    const clearStorage = () => {
+        localStorage.removeItem(STORAGE_KEY);
+        setState(null);
+    };
 
     return (
         <Box
             sx={{
-                mt: 2,
-                p: 2,
-                borderRadius: "18px",
-                background: "rgba(255,255,255,0.06)",
+                position: "fixed",
+                bottom: "25px",
+                left: "50%",
+                transform: "translateX(-50%)",
+                width: "fit-content",
+                maxWidth: "90vw",
+                p: 2.5,
+                borderRadius: "10px",
+                background: "rgba(255,255,255,0.04)",
                 backdropFilter: "blur(18px)",
                 border: "1px solid rgba(255,255,255,0.12)",
-                boxShadow: "0 12px 30px rgba(0,0,0,0.45)",
                 color: "#fff",
+                boxShadow: "0 8px 25px rgba(0,0,0,0.45), inset 0 0 18px rgba(255,255,255,0.10)",
+                zIndex: 999999,
             }}
         >
-            {/* ROW: AVATAR */}
-            <Box sx={{ display: "flex", gap: 2 }}>
-                {/* Avatar */}
+            <CloseButton onClick={clearStorage} />
+
+            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                {/* ICON */}
                 <Avatar
                     sx={{
-                        width: 108,
-                        height: 108,
-                        bgcolor: `${color}20`,
+                        width: 78,
+                        height: 78,
+                        bgcolor: `${color}22`,
                         border: `2px solid ${color}`,
-                        boxShadow: `0 0 14px ${color}80`,
-                        mt: 0.5,
+                        boxShadow: `0 0 14px ${color}aa`,
+                        backdropFilter: "blur(8px)",
                     }}
                 >
                     <IconThoe2
                         icon={icon}
-                        color={runningData.mode == "LOSS" ? "rgba(216,20,20,0.45)" : "rgba(233, 219, 219, 0.94)"}
-                        sx={{ 
-                            fontSize: 64, 
+                        sx={{
+                            fontSize: 44,
+                            color,
+                            filter: "drop-shadow(0 0 8px rgba(255,255,255,0.8))",
                         }}
                     />
                 </Avatar>
 
-                {/* CONTENT */}
                 <Box sx={{ flex: 1 }}>
-                    {/* Header line: username + icon + target */}
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                    {/* TEXT LINE */}
+                    <Box sx={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 1 }}>
                         <Typography sx={{ fontWeight: 400, fontSize: "17px" }}>
-                            {"Attacking "}
+                            Attacking
                         </Typography>
 
-                        <IconThoe2 icon="ui:your_attack"
-
-                            sx={{ 
-                                fontSize: 20,
-                                color: runningData.mode == "LOSS"
-                                    ? "rgba(216, 95, 25, 0.62)"
-                                    : "#5bc0ff",
-                            }} 
-                        />
-
-                        <Typography sx={{ fontWeight: 900, fontSize: "17px", color: "#fff"}}>
-                            {runningData.target}
+                        <Typography sx={{ fontWeight: 900, fontSize: "17px", color: "#fff" }}>
+                            {targetName}
                         </Typography>
+
                         <Typography sx={{ fontWeight: 400, fontSize: "17px" }}>
-                            {" with "}
+                            with
                         </Typography>
-                        <IconThoe2 icon="bonus:gremlins" color='red' sx={{ fontSize: 20 }} />
-                        <Typography sx={{ fontWeight: 900, fontSize: "17px", color: "#fff"}}>
-                            {formatNumber(runningData.gremlins)}
+
+                        <IconThoe2 icon="bonus:gremlins" sx={{ fontSize: 20, color: "#ff5959" }} />
+                        <Typography sx={{ fontWeight: 900, fontSize: "17px", color: "#fff" }}>
+                            {formatNumber(draci)}
                         </Typography>
-                        <IconThoe2 icon="bonus:priests" color='black' sx={{ fontSize: 20 }} />
-                        <Typography sx={{ fontWeight: 400, fontSize: "17px", color: "#fff" }}>
-                            {formatNumber(runningData.priests)}
+
+                        <IconThoe2 icon="bonus:priests" sx={{ fontSize: 20, color: "#000000ff" }} />
+                        <Typography sx={{ fontWeight: 900, fontSize: "17px", color: "#fff" }}>
+                            {formatNumber(preoti)}
                         </Typography>
                     </Box>
 
-                    {/* Progress Row */}
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 2, mt: 1 }}>
+                    {/* PROGRESS ROW */}
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}>
                         <Typography
-                            sx={{
-                                fontSize: "14px",
-                                color: "rgba(255,255,255,0.85)",
-                                fontWeight: 600,
-                            }}
+                            sx={{ fontSize: "14px", fontWeight: 900, textAlign: "left", minWidth: "55px" }}
                         >
-                            {runningData.current} / {runningData.total}
+                            {progressIndex} / {state.total}
                         </Typography>
 
                         <LinearProgress
                             variant="determinate"
-                            value={runningData.percent}
+                            value={percent}
                             sx={{
                                 flex: 1,
-                                height: "10px",
-                                borderRadius: "6px",
-                                background: "rgba(255,255,255,0.12)",
+                                height: "12px",
+                                borderRadius: "8px",
+                                background: "rgba(255,255,255,0.08)",
                                 "& .MuiLinearProgress-bar": {
-                                    background: `linear-gradient(90deg, ${color}, ${color}aa)`,
-                                    borderRadius: "6px",
-                                    boxShadow: `0 0 8px ${color}`,
+                                    background: color,
+                                    boxShadow: `0 0 10px ${color}`,
                                 },
                             }}
                         />
 
                         <Typography
-                            sx={{
-                                fontSize: "14px",
-                                color: "rgba(255,255,255,0.85)",
-                                fontWeight: 900,
-                                textAlign: "right",
-                            }}
+                            sx={{ fontSize: "14px", fontWeight: 900, textAlign: "right", minWidth: "55px" }}
                         >
-                            {runningData.percent}%
-                        </Typography>
-                    </Box>
-                    {/* LOG Container */}
-                    <Box
-                        sx={{
-                            mt: 2,
-                            p: 2,
-                            borderRadius: "18px",
-                            background: "rgba(255,255,255,0.02)",
-                            backdropFilter: "blur(18px)",
-                            border: "1px solid rgba(255,255,255,0.12)",
-                            boxShadow: "0 12px 30px rgba(0,0,0,0.45)",
-                            color: "#fff",
-                        }}
-                    >
-                        <Typography
-                            sx={{
-                                mt: 2,
-                                textAlign: "left",
-                                fontSize: "14px",
-                                color: runningData.mode == "LOSS" ? "rgba(216, 95, 25, 0.62)" : "rgba(25, 216, 143, 0.42)",
-                                fontWeight: 900,
-                            }}
-                        >
-                            {runningData.message}
+                            {percent}%
                         </Typography>
                     </Box>
                 </Box>

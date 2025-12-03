@@ -1,12 +1,8 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
-import LiquidGlassButton from "./LiquidGlassButton";
+import LiquidGlassButton from "@/components/ui/LiquidGlassButton";
+import { ATTACK_CARDS } from "@/constants/attacks"
 
-const ATTACK_CARDS = [
-  { key: "primarii", title: "Attack Institutions", icon: "ui:court_house", color: "#9dff00", },
-  { key: "government", title: "Attack Government", icon: "ui:government", color: "#ffb300", },
-  { key: "parliament", title: "Attack Parliament", icon: "ui:parliament", color: "#00eaff", },
-];
 
 export default function LiquidGlassAttackDial({ onOpen }) {
   const [open, setOpen] = useState(false);

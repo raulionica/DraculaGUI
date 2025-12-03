@@ -2,7 +2,7 @@ import { styled } from '@mui/material/styles'
 import MuiTabList from '@mui/lab/TabList'
 import MuiTab from '@mui/material/Tab'
 import { Avatar, Box, Typography } from '@mui/material'
-import IconThoe2 from '../../custom-icons/index'
+import IconThoe2 from "@/components/custom-icons";
 
 const TabList = styled(MuiTabList)(({ theme }) => ({
   borderBottom: '0 !important',
