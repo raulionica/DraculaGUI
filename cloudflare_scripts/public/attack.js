@@ -78,8 +78,8 @@
                     const btn = doc.querySelector("input[name='submita']");
 
                     if (dr && pr && btn) {
-                        dr.value = DRACI;
-                        pr.value = PREOTI;
+                        dr.value = String(DRACI);
+                        pr.value = String(PREOTI);
                         btn.click();
                         console.log(`⚔️ Attack SENT → target ${TARGET_ID}`);
                     }
