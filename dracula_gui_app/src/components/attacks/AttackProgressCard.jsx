@@ -22,17 +22,26 @@ export default function AttackProgressCard() {
     // Basic numbers
     const progressIndex = state.index - 1;
     const percent = Math.round((progressIndex / state.total) * 100);
-    const isLoss = state.index % 2 === 1;
-    const color = isLoss ? "#ff5959" : "#3bd7ff";
+    
     const card = ATTACK_CARDS.find(c => c.key === state?.config?.category);
+    
+    const category = state?.category;
+    const isGovOrParl = category === "government" || category === "parliament";
+    let color;
+    
+    if (isGovOrParl) {
+        const isLoss = state.index % 2 === 1;
+        color = isLoss ? "#ff5959" : "#3bd7ff";
+    } else {
+        color = card?.color || "#3bd7ff";
+    }
+
     const icon = card?.icon || "ui:characters";
 
     // Target name
     const targetName = state.currentTargetName || "Unknown";
-
-    // Attack values (standardized)
-    const draci = state?.config?.draci || state?.config?.draci_loss || 0;
-    const preoti = state?.config?.preoti || state?.config?.preoti_loss || 0;
+    const draci = state?.lastAttack?.draci ?? 0;
+    const preoti = state?.lastAttack?.preoti ?? 0;
 
     const clearStorage = () => {
         localStorage.removeItem(STORAGE_KEY);
