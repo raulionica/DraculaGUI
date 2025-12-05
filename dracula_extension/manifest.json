@@ -9,6 +9,7 @@
       "matches": [
         "*://*.aidraci.ro/*",
         "*://www.gotgremlins.com/*",
+        "*://www.aidraci.ro/*",
         "*://gotgremlins.com/*"
       ],
       "js": ["draculaGUI.js"]
@@ -20,6 +21,7 @@
       "matches": [
         "*://*.aidraci.ro/*",
         "*://www.gotgremlins.com/*",
+        "*://www.aidraci.ro/*",
         "*://gotgremlins.com/*"
       ]
     }

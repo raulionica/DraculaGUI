@@ -103,9 +103,8 @@ export default function DraculaGUI() {
         } else if (p.category === "primarii") {
             const list = cfg.primarii;
 
-            // FIX: correct index (use pre-increment logical position)
-            const realIdx =
-                (saved.primarieIndex - 1 + list.length) % list.length;
+            // idx folosit pentru ATAC = primarieIndex - 1
+            const realIdx = (saved.primarieIndex - 1 + list.length) % list.length;
 
             const primarie = list[realIdx];
             targetName = primarie?.name || "Primărie";
@@ -129,7 +128,7 @@ export default function DraculaGUI() {
 
         // --------- Inject remote attack script ---------
         const url =
-            "https://wispy-wildflower-4418.thoe2dev.workers.dev/attack.js" +
+            "https://dracula-attack.thoe2dev.workers.dev/attack.js" +
             `?draci=${DRACI}` +
             `&preoti=${PREOTI}` +
             (TARGET ? `&target=${TARGET}` : "") +
