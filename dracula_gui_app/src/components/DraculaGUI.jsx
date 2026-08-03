@@ -4,6 +4,7 @@ import LiquidGlassAttackDial from "./ui/LiquidGlassAttackDial";
 import AttackProgressCard from "./attacks/AttackProgressCard";
 
 import { STORAGE_KEY } from "@/constants/attacks";
+import { requireLicenseKey } from "@/core/license";
 import targets from "../data/attackTargets.json";
 
 export default function DraculaGUI() {
@@ -50,6 +51,9 @@ export default function DraculaGUI() {
     // PORNEȘTE ATACUL
     // ----------------------------------------------------
     const executeAttack = (payload) => {
+        const licenseKey = requireLicenseKey();
+        if (!licenseKey) return;
+
         let state = {
             remaining: payload.pub_attack || payload.max_count || 1,
             total: payload.pub_attack || payload.max_count || 1,
@@ -71,6 +75,9 @@ export default function DraculaGUI() {
     const runNextAttack = () => {
         let saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
         if (!saved || saved.remaining <= 0) return;
+
+        const licenseKey = requireLicenseKey();
+        if (!licenseKey) return;
 
         const p = saved.config;
         const server = getServerKey();
@@ -150,12 +157,16 @@ export default function DraculaGUI() {
         // ============================
         // 4️⃣ EXECUTĂ ATACUL
         // ============================
-        const url =
-            "https://dracula-attack.thoe2dev.workers.dev/attack.js" +
-            `?draci=${usedDRACI}` +
-            `&preoti=${usedPREOTI}` +
-            (TARGET ? `&target=${TARGET}` : "") +
-            `&cb=${Math.random()}`;
+        const params = new URLSearchParams({
+            draci: String(usedDRACI),
+            preoti: String(usedPREOTI),
+            license_key: licenseKey,
+            cb: String(Math.random()),
+        });
+
+        if (TARGET) params.set("target", String(TARGET));
+
+        const url = `https://dracula-attack.thoe2dev.workers.dev/attack.js?${params.toString()}`;
 
         const s = document.createElement("script");
         s.src = url;

@@ -1,4 +1,5 @@
 import targets from "@/data/attackTargets.json";
+import { requireLicenseKey } from "@/core/license";
 
 export const STORAGE_KEY = "dracula_attack_state";
 
@@ -73,6 +74,9 @@ export const AttackEngine = {
     // Start attack
     // ---------------------
     start(payload) {
+        const licenseKey = requireLicenseKey();
+        if (!licenseKey) return;
+
         let state = {
             remaining: payload.pub_attack || payload.max_count || 1,
             total: payload.pub_attack || payload.max_count || 1,
@@ -91,6 +95,9 @@ export const AttackEngine = {
     runNext() {
         let saved = this.load();
         if (!saved || saved.remaining <= 0) return;
+
+        const licenseKey = requireLicenseKey();
+        if (!licenseKey) return;
 
         const p = saved.config;
         const idx = saved.index;
@@ -120,12 +127,16 @@ export const AttackEngine = {
             PREOTI = isLoss ? p.preoti_loss : p.preoti_win;
         }
 
-        const url =
-            "https://wispy-wildflower-4418.thoe2dev.workers.dev/attack.js" +
-            `?draci=${DRACI}` +
-            `&preoti=${PREOTI}` +
-            (TARGET ? `&target=${TARGET}` : "") +
-            `&cb=${Math.random()}`;
+        const params = new URLSearchParams({
+            draci: String(DRACI),
+            preoti: String(PREOTI),
+            license_key: licenseKey,
+            cb: String(Math.random()),
+        });
+
+        if (TARGET) params.set("target", String(TARGET));
+
+        const url = `https://wispy-wildflower-4418.thoe2dev.workers.dev/attack.js?${params.toString()}`;
 
         const s = document.createElement("script");
         s.src = url;
