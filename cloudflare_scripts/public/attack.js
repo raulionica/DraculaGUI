@@ -3,6 +3,27 @@
     async function sleep(ms) {
         return new Promise(r => setTimeout(r, ms));
     }
+
+    const DRACI_SELECTOR = "#draci";
+    const PREOTI_SELECTOR = "#preoti";
+    const SUBMIT_SELECTOR = "input[name='submita']";
+    const CONFIRM_SELECTOR = "input[value='Atac!'], input[value='Attack!']";
+
+    function normalizeInputValue(value) {
+        return String(value ?? "").replace(/[.,\s]/g, "");
+    }
+
+    function matchesInputValue(input, expected) {
+        return normalizeInputValue(input?.value) === normalizeInputValue(expected);
+    }
+
+    function setGotInputValue(input, nextValue) {
+        if (!input) return false;
+        const value = normalizeInputValue(nextValue);
+        input.value = value;
+        input.defaultValue = value;
+        return matchesInputValue(input, value);
+    }
     // obține URL-ul scriptului (care conține parametri)
     const src = document.currentScript.src;
     const params = new URL(src).searchParams;
@@ -25,10 +46,11 @@
     function detectState(doc) {
         const txt = (doc.body.innerText || "").toLowerCase();
 
-        if (txt.includes("formeaza o armata")) return "form";
+        if (doc.querySelector(DRACI_SELECTOR) && doc.querySelector(PREOTI_SELECTOR) && doc.querySelector(SUBMIT_SELECTOR)) return "form";
+        if (txt.includes("formeaza o armata") || txt.includes("form an army")) return "form";
         if (doc.querySelector("input.atac")) return "init";
-        if (txt.includes("un loc bun de atacat") || doc.querySelector("input[value='Atac!']")) return "loc";
-        if (txt.includes("trupele tale au nevoie")) return "cool";
+        if (txt.includes("un loc bun de atacat") || txt.includes("a good place to attack") || doc.querySelector(CONFIRM_SELECTOR)) return "loc";
+        if (txt.includes("trupele tale au nevoie") || txt.includes("your troops need")) return "cool";
 
         return "unk";
     }
@@ -63,7 +85,7 @@
                     break;
 
                 case "loc":
-                    doc.querySelector("input[value='Atac!']")?.click();
+                    doc.querySelector(CONFIRM_SELECTOR)?.click();
                     await sleep(150);
                     break;
 
@@ -73,13 +95,17 @@
                     break;
 
                 case "form":
-                    const dr = doc.querySelector("#draci");
-                    const pr = doc.querySelector("#preoti");
-                    const btn = doc.querySelector("input[name='submita']");
+                    const dr = doc.querySelector("form input[name='draci']:not([type='hidden'])");
+                    const pr = doc.querySelector("form input[name='preoti']:not([type='hidden'])");
+                    const btn = doc.querySelector(SUBMIT_SELECTOR);
 
                     if (dr && pr && btn) {
-                        dr.value = String(DRACI);
-                        pr.value = String(PREOTI);
+                        const drReady = setGotInputValue(dr, DRACI);
+                        const prReady = setGotInputValue(pr, PREOTI);
+                        if (!drReady || !prReady) {
+                            await sleep(150);
+                            break;
+                        }
                         btn.click();
                         console.log(`⚔️ Attack SENT → target ${TARGET_ID}`);
                     }

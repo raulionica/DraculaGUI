@@ -10,41 +10,12 @@ import targets from "../data/attackTargets.json";
 export default function DraculaGUI() {
     const [attackType, setAttackType] = useState(null);
 
-    const getServerKey = () => window.location.hostname.toLowerCase();
+    const getServerKey = () => {
+        const hostname = window.location.hostname.toLowerCase();
+        if (targets[hostname]) return hostname;
 
-    // ----------------------------------------------------
-    // PRIMĂRII ROTATOR
-    // ----------------------------------------------------
-    const getNextPrimarieId = (list) => {
-        let state = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
-        let idx = state.primarieIndex || 0;
-
-        const entry = list[idx];
-        const id = entry.id;
-
-        // avansează pointerul
-        const nextIdx = (idx + 1) % list.length;
-        state.primarieIndex = nextIdx;
-
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-        return id;
-    };
-
-    // ----------------------------------------------------
-    // REZOLVARE TARGET
-    // ----------------------------------------------------
-    const resolveTargetId = (config) => {
-        const server = getServerKey();
-        const cfg = targets[server];
-        if (!cfg) return 30;
-
-        switch (config.category) {
-            case "players": return null;
-            case "primarii": return getNextPrimarieId(cfg.primarii);
-            case "government": return cfg.guvern.id;
-            case "parliament": return cfg.parlament.id;
-            default: return 30;
-        }
+        const withoutWww = hostname.replace(/^www\./, "");
+        return targets[withoutWww] ? withoutWww : hostname;
     };
 
     // ----------------------------------------------------
@@ -82,6 +53,10 @@ export default function DraculaGUI() {
         const p = saved.config;
         const server = getServerKey();
         const cfg = targets[server];
+        if (!cfg) {
+            console.error(`DraculaGUI: unsupported attack server "${window.location.hostname}".`);
+            return;
+        }
         const attackIndex = saved.index;
 
         // ============================
