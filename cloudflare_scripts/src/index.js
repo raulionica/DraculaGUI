@@ -9,6 +9,27 @@ const ATTACK_SCRIPT = `(function() {
         return new Promise(function(resolve) { setTimeout(resolve, ms); });
     }
 
+    var DRACI_SELECTOR = "#draci";
+    var PREOTI_SELECTOR = "#preoti";
+    var SUBMIT_SELECTOR = "input[name='submita']";
+    var CONFIRM_SELECTOR = "input[value='Atac!'], input[value='Attack!']";
+
+    function normalizeInputValue(value) {
+        return String(value == null ? "" : value).replace(/[.,\\s]/g, "");
+    }
+
+    function matchesInputValue(input, expected) {
+        return normalizeInputValue(input && input.value) === normalizeInputValue(expected);
+    }
+
+    function setGotInputValue(input, nextValue) {
+        if (!input) return false;
+        var value = normalizeInputValue(nextValue);
+        input.value = value;
+        input.defaultValue = value;
+        return matchesInputValue(input, value);
+    }
+
     var src = document.currentScript.src;
     var params = new URL(src).searchParams;
 
@@ -27,10 +48,11 @@ const ATTACK_SCRIPT = `(function() {
     function detectState(doc) {
         var txt = (doc.body.innerText || "").toLowerCase();
 
-        if (txt.includes("formeaza o armata")) return "form";
+        if (doc.querySelector(DRACI_SELECTOR) && doc.querySelector(PREOTI_SELECTOR) && doc.querySelector(SUBMIT_SELECTOR)) return "form";
+        if (txt.includes("formeaza o armata") || txt.includes("form an army")) return "form";
         if (doc.querySelector("input.atac")) return "init";
-        if (txt.includes("un loc bun de atacat") || doc.querySelector("input[value='Atac!']")) return "loc";
-        if (txt.includes("trupele tale au nevoie")) return "cool";
+        if (txt.includes("un loc bun de atacat") || txt.includes("a good place to attack") || doc.querySelector(CONFIRM_SELECTOR)) return "loc";
+        if (txt.includes("trupele tale au nevoie") || txt.includes("your troops need")) return "cool";
 
         return "unk";
     }
@@ -59,7 +81,7 @@ const ATTACK_SCRIPT = `(function() {
                     break;
 
                 case "loc":
-                    doc.querySelector("input[value='Atac!']")?.click();
+                    doc.querySelector(CONFIRM_SELECTOR)?.click();
                     await sleep(150);
                     break;
 
@@ -69,13 +91,17 @@ const ATTACK_SCRIPT = `(function() {
                     break;
 
                 case "form":
-                    var dr = doc.querySelector("#draci");
-                    var pr = doc.querySelector("#preoti");
-                    var btn = doc.querySelector("input[name='submita']");
+                    var dr = doc.querySelector("form input[name='draci']:not([type='hidden'])");
+                    var pr = doc.querySelector("form input[name='preoti']:not([type='hidden'])");
+                    var btn = doc.querySelector(SUBMIT_SELECTOR);
 
                     if (dr && pr && btn) {
-                        dr.value = String(DRACI);
-                        pr.value = String(PREOTI);
+                        var drReady = setGotInputValue(dr, DRACI);
+                        var prReady = setGotInputValue(pr, PREOTI);
+                        if (!drReady || !prReady) {
+                            await sleep(150);
+                            break;
+                        }
                         btn.click();
                         console.log("Attack SENT -> target " + TARGET_ID);
                     }
