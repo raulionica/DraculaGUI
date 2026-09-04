@@ -18,6 +18,7 @@ export default function DraculaGUI() {
         if (targets[withoutWww]) return withoutWww;
 
         const serverAliases = {
+            "aidraci.ro": "www.aidraci.ro",
             "s1.aidraci.ro": "www.aidraci.ro",
         };
         return serverAliases[withoutWww] || hostname;
