@@ -15,7 +15,12 @@ export default function DraculaGUI() {
         if (targets[hostname]) return hostname;
 
         const withoutWww = hostname.replace(/^www\./, "");
-        return targets[withoutWww] ? withoutWww : hostname;
+        if (targets[withoutWww]) return withoutWww;
+
+        const serverAliases = {
+            "s1.aidraci.ro": "www.aidraci.ro",
+        };
+        return serverAliases[withoutWww] || hostname;
     };
 
     // ----------------------------------------------------
@@ -145,6 +150,15 @@ export default function DraculaGUI() {
 
         const s = document.createElement("script");
         s.src = url;
+        s.onerror = () => {
+            localStorage.removeItem("dracula_license_key");
+            localStorage.removeItem(STORAGE_KEY);
+            window.alert(
+                "DraculaGUI nu a putut incarca scriptul de atac. " +
+                "Licenta este invalida sau serviciul Cloudflare nu este disponibil. " +
+                "Reincarca pagina si introdu din nou cheia."
+            );
+        };
         document.body.appendChild(s);
 
     };
