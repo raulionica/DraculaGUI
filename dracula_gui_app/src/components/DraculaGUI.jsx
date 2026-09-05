@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AttackModal from "./attacks/AttackModal";
+import QuizCard from './QuizCard';
 import LiquidGlassAttackDial from "./ui/LiquidGlassAttackDial";
 import AttackProgressCard from "./attacks/AttackProgressCard";
 
@@ -189,6 +190,7 @@ export default function DraculaGUI() {
             />
 
             <AttackProgressCard />
+            <QuizCard />
         </>
     );
 }

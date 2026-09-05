@@ -1,7 +1,10 @@
+import quiz from './quiz.json';
+
 const JS_HEADERS = {
   "content-type": "application/javascript; charset=utf-8",
   "cache-control": "no-store, max-age=0",
   "access-control-allow-origin": "*",
+  "access-control-allow-headers": "Authorization",
 };
 
 const ATTACK_SCRIPT = `(function() {
@@ -149,6 +152,14 @@ export default {
     if (url.pathname === "/" || url.pathname === "/index.html") {
       return new Response("DraculaGUI worker is online.", {
         headers: { "content-type": "text/plain; charset=utf-8", "cache-control": "no-store" },
+      });
+    }
+
+    if (url.pathname === '/quiz.json') {
+      const key = (request.headers.get('Authorization') || '').replace(/^Bearer /, '');
+      if (!allowedKeysFromEnv(env).has(key)) return rejectLicense();
+      return new Response(JSON.stringify(quiz), {
+        headers: { ...JS_HEADERS, 'content-type': 'application/json; charset=utf-8' },
       });
     }
 
