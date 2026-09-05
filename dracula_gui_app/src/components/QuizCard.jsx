@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { Box, Button, TextField, Typography } from '@mui/material';
+import { Box, Button, Switch, TextField, Typography } from '@mui/material';
+import QuestionAnswerRounded from '@mui/icons-material/QuestionAnswerRounded';
+import SendRounded from '@mui/icons-material/SendRounded';
 import { requireLicenseKey } from '../core/license';
-import IconThoe2 from './custom-icons';
 
 const normalize = (text) => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\s+/g, ' ').trim();
 
@@ -41,6 +42,7 @@ export default function QuizCard() {
   const [sent, setSent] = useState(null);
   const [loading, setLoading] = useState(false);
   const [mount, setMount] = useState(null);
+  const [automatic, setAutomatic] = useState(false);
   const questionRef = useRef(null);
   const sentRef = useRef(null);
 
@@ -117,37 +119,71 @@ export default function QuizCard() {
     } catch { /* Manual loading remains available. */ }
   }, [loadDatabase]);
 
-  const send = () => {
+  const send = useCallback((value = answer) => {
     try {
       const doc = chatFrame()?.contentDocument;
       const live = doc && latestQuestion(doc);
-      if (!live || live.closed || live.id !== current?.id || sentRef.current === live.id || !answer.trim()) return;
+      if (!live || live.closed || live.id !== current?.id || live.question !== current?.question || sentRef.current === live.id || !value.trim()) return;
+      const receipt = JSON.stringify([live.id, live.question]);
+      try {
+        if (sessionStorage.getItem('dracula_quiz_sent') === receipt) {
+          sentRef.current = live.id;
+          setSent(live.id);
+          return;
+        }
+      } catch { /* In-memory protection remains available. */ }
       const field = doc.querySelector('#inputField');
       if (!field || field.value.trim()) throw new Error('Golește mesajul existent din chat înainte de trimitere.');
       const submit = doc.querySelector('#submitButton');
       if (!submit) throw new Error('Butonul de trimitere al chatului nu a fost găsit.');
-      field.value = answer.trim();
+      if (submit.disabled) throw new Error('Trimiterea din chat este momentan indisponibilă.');
+      field.value = value.trim();
       field.dispatchEvent(new doc.defaultView.Event('input', { bubbles: true }));
       sentRef.current = live.id;
       setSent(live.id);
+      try { sessionStorage.setItem('dracula_quiz_sent', receipt); } catch { /* In-memory protection remains available. */ }
       submit.click();
       setMessage('Răspuns trimis. Aștept rezultatul din chat.');
     } catch (error) { setMessage(error.message); }
-  };
+  }, [answer, current]);
+
+  useEffect(() => {
+    if (!automatic || !current || current.closed || sent === current.id) return;
+    // Only calculated/database answers are sent automatically, never manual guesses.
+    const known = arithmetic(current.question) || database?.get(normalize(current.question));
+    if (!known) return;
+    const timer = setTimeout(() => send(known), 600);
+    return () => clearTimeout(timer);
+  }, [automatic, current, database, sent, send]);
 
   if (!mount) return null;
   return createPortal(<Box sx={{ width: '100%', boxSizing: 'border-box', p: 2, color: '#fff', fontFamily: 'Arial, sans-serif', background: 'linear-gradient(145deg, rgba(37,40,34,.88), rgba(18,22,18,.94))', backdropFilter: 'blur(18px)', border: '1px solid rgba(255,255,255,.3)', borderRadius: '22px', boxShadow: '0 18px 40px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.08)' }}>
     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5 }}>
-      <IconThoe2 icon="ui:parliament" sx={{ color: '#e5c07b', fontSize: 23 }} />
+      <QuestionAnswerRounded sx={{ color: '#e5c07b', fontSize: 23 }} />
       <Typography sx={{ color: '#e5c07b', fontWeight: 800, fontSize: 14 }}>{current?.closed ? 'Ultima întrebare' : 'Întrebarea din chat'}</Typography>
+    </Box>
+    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: .5, mb: 1 }}>
+      <Typography sx={{ fontSize: 12, color: !automatic ? '#e5c07b' : '#aaa' }}>Manual</Typography>
+      <Switch size="small" checked={automatic} onChange={event => setAutomatic(event.target.checked)} inputProps={{ 'aria-label': 'Trimite automat răspunsurile cunoscute' }} sx={{ '& .MuiSwitch-switchBase.Mui-checked': { color: '#00b6ec' }, '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': { backgroundColor: '#00b6ec' } }} />
+      <Typography sx={{ fontSize: 12, color: automatic ? '#00b6ec' : '#aaa' }}>Auto</Typography>
     </Box>
     <Box sx={{ p: 1.25, background: 'rgba(255,255,255,.06)', border: '1px solid rgba(255,255,255,.12)', borderRadius: '13px' }}>
       <Typography sx={{ color: 'rgba(255,255,255,.55)', fontSize: 10, fontWeight: 700, mb: .5 }}>ÎNTREBARE</Typography>
       <Typography sx={{ fontSize: 13, lineHeight: 1.5, overflowWrap: 'anywhere' }}>{current?.question || 'Aștept o întrebare…'}</Typography>
     </Box>
     <Typography sx={{ mt: 1.5, mb: .75, color: 'rgba(255,255,255,.6)', fontSize: 10, fontWeight: 700 }}>RĂSPUNS</Typography>
-    <TextField size="small" fullWidth placeholder="Introdu răspunsul" value={current?.closed ? current.official || answer : answer} onChange={event => setAnswer(event.target.value)} inputProps={{ 'aria-label': 'Răspuns' }} InputProps={{ readOnly: !current || current.closed || sent === current.id }} sx={{ '& .MuiOutlinedInput-root': { borderRadius: '12px', background: 'rgba(255,255,255,.12)', color: '#fff', fontSize: 15, fontWeight: 700 }, '& .MuiOutlinedInput-notchedOutline': { borderColor: 'rgba(255,255,255,.18)' }, '& input': { color: '#fff', WebkitTextFillColor: '#fff' } }} />
-    <Button fullWidth variant="outlined" startIcon={<IconThoe2 icon="inventory:sword" sx={{ fontSize: 18 }} />} onClick={send} disabled={!current || current.closed || sent === current.id || !answer.trim()} sx={{ mt: 1.5, py: 1, borderRadius: '12px', color: '#00b6ec', borderColor: 'rgba(0,182,236,.5)', fontWeight: 700, textTransform: 'none', background: 'rgba(0,182,236,.04)', '&:hover': { background: 'rgba(0,182,236,.12)', borderColor: '#00b6ec' }, '&.Mui-disabled': { color: 'rgba(255,255,255,.5)', borderColor: 'rgba(255,255,255,.12)' } }}>Răspunde</Button>
+    <TextField size="small" fullWidth placeholder="Introdu răspunsul" value={current?.closed ? current.official || answer : answer} onChange={event => setAnswer(event.target.value)} inputProps={{ 'aria-label': 'Răspuns' }} InputProps={{ readOnly: automatic || !current || current.closed || sent === current.id }} sx={{
+      '& .MuiOutlinedInput-root': { borderRadius: '12px', background: 'rgba(255,255,255,.12)', color: '#fff', fontSize: 15, fontWeight: 700 },
+      '&& .MuiOutlinedInput-notchedOutline, && .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline, && .Mui-focused .MuiOutlinedInput-notchedOutline': { border: '1px solid rgba(255,255,255,.18) !important' },
+      '&& input, && input:hover, && input:focus': {
+        color: '#fff !important', WebkitTextFillColor: '#fff', background: 'transparent !important',
+        border: '0 !important', outline: 'none !important', boxShadow: 'none !important',
+        borderRadius: '12px', padding: '10px 14px', margin: 0, minWidth: 0, width: '100%',
+        boxSizing: 'border-box', font: 'inherit', transition: 'none',
+      },
+    }} />
+    <Button fullWidth variant="outlined" startIcon={<SendRounded sx={{ fontSize: 18 }} />} onClick={() => send()} disabled={!current || current.closed || sent === current.id || !answer.trim()} sx={{ mt: 1.5, py: 1, borderRadius: '12px', color: '#00b6ec', borderColor: 'rgba(0,182,236,.5)', fontWeight: 700, textTransform: 'none', background: 'rgba(0,182,236,.04)', '&:hover': { background: 'rgba(0,182,236,.12)', borderColor: '#00b6ec' }, '&.Mui-disabled': { color: 'rgba(255,255,255,.5)', borderColor: 'rgba(255,255,255,.12)' } }}>Răspunde</Button>
+    {automatic && current && !current.closed && sent !== current.id && <Typography sx={{ mt: 1, fontSize: 11, color: '#9bdeed', textAlign: 'center' }}>{arithmetic(current.question) || database?.get(normalize(current.question)) ? 'Auto activ • trimit răspunsul cunoscut' : 'Răspuns necunoscut • treci pe Manual'}</Typography>}
     {(current?.closed || sent === current?.id) && <Typography sx={{ mt: 1, fontSize: 11, color: '#c7bea4', textAlign: 'center' }}>{current?.closed ? 'Întrebare încheiată' : 'Răspuns trimis'}</Typography>}
     {!database && <Button fullWidth disabled={loading} onClick={loadDatabase} sx={{ mt: 1, fontSize: 11, color: '#e5c07b', textTransform: 'none' }}>{loading ? 'Se încarcă…' : 'Încarcă răspunsurile'}</Button>}
     {message && <Typography role="status" sx={{ mt: 1, fontSize: 11, lineHeight: 1.4, color: '#9bdeed' }}>{message}</Typography>}
